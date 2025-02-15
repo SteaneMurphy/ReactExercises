@@ -102,8 +102,10 @@ function App() {
   const AlbumCover = ({ image, name, monthly }) => (
     <div className="albumCover">
       <CoverImage image={image} background={background} />
-      <ArtistInformation name={name} monthly={monthly} textColor={background} />
-      <FollowButton buttonColor={background} />
+      <div className="infoPanel" >
+        <ArtistInformation name={name} monthly={monthly} textColor={background} />
+        <FollowButton buttonColor={background} />
+      </div>
     </div>
   );
 
