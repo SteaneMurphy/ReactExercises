@@ -203,17 +203,22 @@ function App() {
 
   //fetch random user from free api
   useEffect(() => {
-    fetch("https://randomuser.me/api/")
-      .then((response) => response.json())
-      .then((data) => {
+    async function fetchDriver() {
+      try { 
+        const response = await fetch("https://randomuser.me/api/");
+        const data = await response.json();
         setDriver(data.results[0]);
-        console.log(data.results[0]);
-      })
-      .catch((error) => console.error("Error fetching user:", error));
+      }
+      catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    }
+
+    fetchDriver();
   }, []);
 
-  if (!driver) {
-    return null;
+  if (!driver || !driver.picture) {
+    return <p>Loading...</p>;
   }
 
   return (
