@@ -5,21 +5,27 @@
   text-align: center;
 }
 
+hr {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to left, #ea4c88 30%, #ea4c88 40%, transparent);
+}
+
 .heading span {
   font-size: 1.6em;
+  font-weight: 700;
 }
 
 .subHeading span {
   color: #959595;
+  font-weight: 600;
 }
 
 .profileCard {
   display: flex;
   margin: 20px 0;
-}
-
-.name {
-  color: #a9cb87; 
 }
 
 .location {

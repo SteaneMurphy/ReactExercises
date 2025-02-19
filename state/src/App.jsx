@@ -30,39 +30,45 @@ const ProfileDetails = ({ name, location, email }) => {
 
   return (
     <div className="profileDetails">
-      <span style={{ color: "#92b277", fontSize: "1.1em"}}>{name}</span>
+      <span style={{ color: "#92b277", fontSize: "1.1em", fontWeight: "600"}}>{name}</span>
       <div className="location">
         <div>
-          <span style={{ color: "#959595"}}>{location.city}, {location.country}</span>
+          <span style={{ color: "#959595", fontWeight: "600"}}>{location.city}, {location.country}</span>
         </div>
         <div>
-          <span>{email}</span>
+          <span style={{ fontWeight: "500"}}>{email}</span>
         </div>
       </div>
     </div>
   );
 };
 
-function profileSelected() {
-  console.log("clicked");
-}
-
-const SelectProfileIcon = () => {
+const SelectProfileIcon = ({ iconSelected, setIconSelected, index }) => {
+  
+  //check this components icon state against the state in 'App', flip the state
+  //once found
+  const handleOnClick = () => {
+    setIconSelected((prevState) =>
+      prevState.map((state, i) => (i === index ? !state : state))
+    );
+  };
 
   return (
     <div className="selectProfileIcon">
-      <img src="./images/dribbleOff.png" onClick={profileSelected} />
+      <img src={`./images/dribble${iconSelected ? "On" : "Off"}.png`} 
+           onClick={handleOnClick} 
+           alt="Select Profile Icon" />
     </div>
   );
 };
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, index, iconSelected, setIconSelected }) => {
 
   return (
     <div className="profileCard">
       <ProfileImage image={user.picture.large} />
       <ProfileDetails name={user.name.first} location={user.location} email={user.email} />
-      <SelectProfileIcon />
+      <SelectProfileIcon index={index} iconSelected={iconSelected} setIconSelected={setIconSelected} />
   </div>
   );
 };
@@ -97,6 +103,7 @@ const Footer = ({ setInvites, invites }) => {
 function App() {
   const [invites, setInvites] = useState(5);
   const [users, setUsers] = useState([]);
+  const [iconSelected, setIconSelected] = useState([]);
   
     //fetch random user from free api
     useEffect(() => {
@@ -105,6 +112,7 @@ function App() {
           const response = await fetch("https://randomuser.me/api/?results=8");
           const data = await response.json();
           setUsers(data.results);
+          setIconSelected(new Array(data.results.length).fill(false));
         }
         catch (error) {
           console.error("Error fetching user:", error);
@@ -114,17 +122,22 @@ function App() {
       fetchUser();
     }, []);
   
-    if (users.length === 0) {
-      return <p>Loading...</p>;
-    }
+  if (users.length === 0) {
+    return <p>Loading...</p>;
+  }
   
   return (
     <div className="mainContainer">
       <Header invites={invites} />
-      
+      <hr></hr>
       {/* For each user in fetched user array, instantiate a profile card component */}
       {users.map((user, index) => (
-        <ProfileCard user={user} key={index} />
+        <ProfileCard 
+          user={user} 
+          key={index}
+          index={index}
+          iconSelected={iconSelected[index]} 
+          setIconSelected={setIconSelected} />
       ))}
 
       <Footer setInvites={setInvites} invites={invites} />
