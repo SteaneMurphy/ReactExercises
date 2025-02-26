@@ -13,9 +13,22 @@
 
 <body>
 
-   <h5>The Weather Today.</h5>
+   <h5>The Weather Today</h5>
 
-   <div id="weather"></div>
+   <!-- input text field  -->
+   <div class="input-group">
+      <div class="inner">
+         <input id="searchText" class="form-control" type="text" placeholder="search">
+         <button id="searchBtn" class="btn"><i class="bi bi-search"></i></button>
+      </div>
+      <span class="locationValidation"></span>
+   </div>
+
+   <div class="outerWeatherParent">
+      <div class="weatherParent">
+         <div id="weather"></div>
+      </div>
+   </div>
 
    <script src="libs/bootstrap.bundle.js"></script>
    <script src="js/scripts.js"></script>
