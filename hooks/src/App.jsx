@@ -2,8 +2,27 @@ import { useState } from 'react';
 import './App.css';
 import Form from './Form';
 import mainImage from './assets/mainImage.webp';
+import FormConfirm from './assets/FormConfirm';
 
 function App() {
+
+  const [formConfirm, setFormConfirm] = useState(false);
+  const [userInput, setUserInput] = useState({
+
+  });
+
+  const handleFormSubmitted = (data) => 
+  {
+    setUserInput({
+      title: data.title,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      country: data.country,
+      postcode: data.postcode,
+    });
+    setFormConfirm(true);
+  }
 
   return (
     <div className='mainContainer'>
@@ -18,7 +37,7 @@ function App() {
         <div className='subContainerImage'>
           <img src={mainImage}></img>
         </div>
-        <Form />
+        {formConfirm ? <FormConfirm data={userInput}/> : <Form onSubmit={handleFormSubmitted}/>}
       </div>
     </div>
   )

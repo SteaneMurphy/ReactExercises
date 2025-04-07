@@ -1,16 +1,8 @@
 import { useState, useEffect } from 'react';
 import './Form.css';
 
-function Form() {
+function Form({ onSubmit }) {
   const [countryList, setCountryList] = useState([]);
-  const [userInput, setUserInput] = useState({
-    title: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    country: '',
-    postcode: '',
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,15 +14,16 @@ function Form() {
     const country = e.target.elements.country.value;
     const postcode = e.target.elements.postcode.value;
 
-    setUserInput({
+    const formData = {
       title,
       firstName,
       lastName,
       email,
       country,
       postcode,
-    })
-    .then(console.log(userInput));
+    };
+    
+    if (onSubmit) onSubmit(formData);
   };
 
   useEffect(() => {
